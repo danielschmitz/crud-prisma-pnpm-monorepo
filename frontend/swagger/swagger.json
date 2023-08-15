@@ -38,6 +38,50 @@
           }
         }
       }
+    },
+    "/user": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Add a user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User Data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "User name"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "User email"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "User created"
+          },
+          "403": {
+            "description": "Invalid Input"
+          },
+          "409": {
+            "description": "User already exists"
+          }
+        }
+      }
     }
   },
   "security": [
