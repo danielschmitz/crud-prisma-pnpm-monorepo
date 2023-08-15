@@ -17,7 +17,7 @@ app.use(
 app.use(BodyParser.json())
 app.use(BodyParser.urlencoded({ extended: true }))
 
-app.use('/api/users', require('./api/users').default)
+app.use('/api', require('./api/users').default)
 
 // ### Hello World! ###
 app.get('/hello-world', function (req, res) {

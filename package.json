@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "postinstall": "cd backend && npx prisma migrate dev --name init",
-    "backend:dev": "pnpm run --filter backend dev"
+    "backend:dev": "pnpm run --filter backend dev",
+    "swagger:make": "pnpm run --filter swagger make",
+    "swagger:dev": "pnpm run --filter swagger dev"
   },
   "keywords": [],
   "author": "",
