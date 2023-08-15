@@ -1,0 +1,12 @@
+{
+  "name": "crud-prisma-pnpm-monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "postinstall": "cd backend && npx prisma migrate dev --name init",
+    "backend:dev": "pnpm run --filter backend dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
