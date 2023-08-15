@@ -15,7 +15,7 @@ Em um repositório monorepo, isso nao aconteceria. E por isso estou estudando ca
 
 ## Instalação
 
-1. Você precisa ter o [pnpm instalad](https://pnpm.io/pt/installation). O pnpm é um concorrente do npm ou do yarn e tem como principal vantagem ser muito mais rápido que o npm, por usar dependencias compartilhadas. Ou seja, se você tem 10 projetos em javascript, possivelmente terá 10 node_modules. Com o uso do pnpm, isso nao acontece, pois as dependencias estão compartilhadas entre os projetos.
+1. Você precisa ter o [pnpm instalado](https://pnpm.io/pt/installation). O pnpm é um concorrente do npm ou do yarn e tem como principal vantagem ser muito mais rápido que o npm, por usar dependencias compartilhadas. Ou seja, se você tem 10 projetos em javascript, possivelmente terá 10 node_modules. Com o uso do pnpm, isso nao acontece, pois as dependencias estão compartilhadas entre os projetos.
 
 O pnpm também permite a criação de sub-projetos. Dê uma olhada no arquivo `pnpm-workspace.yaml` para compreender melhor o funcionamento, e também veja o `package.json` para ver como o pnpm lida com os subprojetos.
 
