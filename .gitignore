@@ -1,5 +1,6 @@
 dev.sqlite3
 dev.db
+dev.db-journal
 
 # Logs
 logs

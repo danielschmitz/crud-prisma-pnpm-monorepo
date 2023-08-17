@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "postinstall": "cd backend && npx prisma migrate dev --name init",
+    "database:create": "npx prisma migrate dev --name init --schema ./backend/prisma/schema.prisma",
+    "database:open": "npx prisma studio --schema ./backend/prisma/schema.prisma",
     "backend:dev": "pnpm run --filter backend dev",
     "swagger:make": "pnpm run --filter swagger make",
     "swagger:dev": "pnpm run --filter swagger dev"
