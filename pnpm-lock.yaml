@@ -28,6 +28,9 @@ importers:
       sqlite3:
         specifier: ^5.1.6
         version: 5.1.6
+      validation:
+        specifier: workspace:*
+        version: link:../shared/validation
     devDependencies:
       '@types/body-parser':
         specifier: ^1.19.2
@@ -69,6 +72,12 @@ importers:
       swagger-autogen:
         specifier: ^2.23.5
         version: 2.23.5
+
+  shared/validation:
+    dependencies:
+      zod:
+        specifier: ^3.22.1
+        version: 3.22.1
 
 packages:
 
@@ -1600,3 +1609,7 @@ packages:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}
     engines: {node: '>=6'}
     dev: true
+
+  /zod@3.22.1:
+    resolution: {integrity: sha512-+qUhAMl414+Elh+fRNtpU+byrwjDFOS1N7NioLY+tSlcADTx4TkCUua/hxJvxwDXcV4397/nZ420jy4n4+3WUg==}
+    dev: false

@@ -1,5 +1,6 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import express, { Request, Response } from 'express'
+import { UserValidation, ErrorList } from 'validation'
 
 const prisma = new PrismaClient()
 const app = express()
@@ -33,7 +34,10 @@ app.post('/user', async function (req: Request, res: Response) {
     */
   const { name, email } = req.body
 
-  // todo: validation
+  const validate = UserValidation.validate({ name, email })
+  if (!validate.valid) {
+    return res.status(403).json(validate.errors)
+  }
 
   const userWithEmail = await prisma.user.findUnique({
     where: { email },

@@ -1,3 +1,4 @@
 packages:
   - backend
   - frontend/swagger
+  - shared/*
