@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import express, { Request, Response } from 'express'
-import { UserValidation, ErrorList } from 'validation'
+import { HttpStatus } from 'utils'
+import { UserValidation } from 'validation'
 
 const prisma = new PrismaClient()
 const app = express()
@@ -19,7 +20,7 @@ app.post('/user', async function (req: Request, res: Response) {
   /*
     #swagger.tags = ['Users']
     #swagger.summary = 'Add a user'
-    #swagger.responses[403] = { description: 'Invalid Input' }
+    #swagger.responses[400] = { description: 'Invalid Input' }
     #swagger.responses[201] = { description: "User created" }
     #swagger.responses[409] = { description: 'User already exists' }
     #swagger.parameters['user'] = {
@@ -36,21 +37,23 @@ app.post('/user', async function (req: Request, res: Response) {
 
   const validate = UserValidation.validate({ name, email })
   if (!validate.valid) {
-    return res.status(403).json(validate.errors)
+    return res.status(HttpStatus.BadRequest).json(validate.errors)
   }
 
   const userWithEmail = await prisma.user.findUnique({
     where: { email },
   })
   if (userWithEmail) {
-    return res.status(409).json({ message: 'User email already exists' })
+    return res
+      .status(HttpStatus.Conflict)
+      .json({ message: 'User email already exists' })
   }
 
   const user = await prisma.user.create({
     data: { name, email },
   })
 
-  return res.status(200).json(user)
+  return res.status(HttpStatus.Created).json(user)
 })
 
 export default app

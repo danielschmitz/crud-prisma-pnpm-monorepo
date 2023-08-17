@@ -28,6 +28,9 @@ importers:
       sqlite3:
         specifier: ^5.1.6
         version: 5.1.6
+      utils:
+        specifier: workspace:*
+        version: link:../shared/utils
       validation:
         specifier: workspace:*
         version: link:../shared/validation
@@ -72,6 +75,8 @@ importers:
       swagger-autogen:
         specifier: ^2.23.5
         version: 2.23.5
+
+  shared/utils: {}
 
   shared/validation:
     dependencies:
