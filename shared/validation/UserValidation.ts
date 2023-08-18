@@ -15,6 +15,7 @@ export class UserValidation {
 
   static validate(data: UserData): ErrorValidation {
     try {
+      console.log(data)
       UserValidation.schema.parse(data)
       return {
         valid: true,

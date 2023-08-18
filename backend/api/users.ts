@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import express, { Request, Response } from 'express'
 import { HttpStatus } from 'utils'
 import { UserValidation } from 'validation'
+import { UserData } from 'validation/UserValidation'
 
 const prisma = new PrismaClient()
 const app = express()
@@ -33,11 +34,11 @@ app.post('/user', async function (req: Request, res: Response) {
         }
     } 
     */
-  const { name, email } = req.body
+  const { name, email }: UserData = req.body
 
-  const validate = UserValidation.validate({ name, email })
-  if (!validate.valid) {
-    return res.status(HttpStatus.BadRequest).json(validate.errors)
+  const validateUser = UserValidation.validate({ name, email })
+  if (!validateUser.valid) {
+    return res.status(HttpStatus.BadRequest).json(validateUser.errors)
   }
 
   const userWithEmail = await prisma.user.findUnique({
@@ -53,7 +54,54 @@ app.post('/user', async function (req: Request, res: Response) {
     data: { name, email },
   })
 
-  return res.status(HttpStatus.Created).json(user)
+  return res.status(HttpStatus.Created).json({ message: 'User created', user })
+})
+
+app.put('/user/:id', async function (req: Request, res: Response) {
+  /*
+    #swagger.tags = ['Users']
+    #swagger.summary = 'Update a user'
+    #swagger.responses[400] = { description: 'Invalid Input' }
+    #swagger.responses[200] = { description: "User updated" }
+    #swagger.responses[409] = { description: 'User email already exists' }
+    #swagger.parameters['user'] = {
+        in: 'body',
+        description: 'User Data',
+        required: true,
+        schema: { 
+            "name": "User name",
+            "email": "User email"
+        }
+    } 
+    */
+  const id: number = parseInt(req.params.id)
+  const { name, email }: UserData = req.body
+
+  const validateUser = UserValidation.validate({ id, name, email })
+  if (!validateUser.valid) {
+    return res.status(HttpStatus.BadRequest).json(validateUser.errors)
+  }
+
+  const checkEmail = await prisma.user.findFirst({
+    where: {
+      email,
+      NOT: {
+        id,
+      },
+    },
+  })
+
+  if (checkEmail?.id) {
+    return res
+      .status(HttpStatus.Conflict)
+      .json({ message: 'User email exists' })
+  }
+
+  const user = await prisma.user.update({
+    where: { id: id },
+    data: { name, email },
+  })
+  return res.status(HttpStatus.OK).json({ message: 'User updated', user })
 })
 
 export default app
