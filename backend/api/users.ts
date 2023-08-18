@@ -104,4 +104,22 @@ app.put('/user/:id', async function (req: Request, res: Response) {
   return res.status(HttpStatus.OK).json({ message: 'User updated', user })
 })
 
+app.delete('/user/:id', async function (req: Request, res: Response) {
+  /*
+    #swagger.tags = ['Users']
+    #swagger.summary = 'Delete a user'
+    #swagger.responses[404] = { description: 'User not found' }
+    #swagger.responses[204] = { description: 'User deleted' }
+    */
+  const id: number = parseInt(req.params.id)
+
+  const user = await prisma.user.findUnique({ where: { id } })
+  if (!user?.id) {
+    return res.status(HttpStatus.NotFound).json({ message: 'User not found' })
+  }
+
+  await prisma.user.delete({ where: { id } })
+  return res.status(HttpStatus.NoContent).json({ message: 'User deleted' })
+})
+
 export default app
